@@ -1,46 +1,78 @@
 <!doctype html>
 <html>
+
 <head>
-<title>MicroPython WebREPL</title>
-<link rel="stylesheet" href="webrepl.css">
-<script src="term.js"></script>
-<script src="FileSaver.js"></script>
+  <title>MicroPython WebREPL</title>
+  <link rel="stylesheet" href="webrepl.css">
+  <script src="term.js"></script>
+  <script src="FileSaver.js"></script>
 </head>
+
 <body>
 
-<div style="display:inline-block; vertical-align:top;">
-<form>
-<input type="text" name="webrepl_url" id="url" value="" />
-<input type="submit" id="button" value="Connect" onclick="button_click(); return false;" />
-</form>
-<div id="term">
-</div>
-</div>
-
-<div id="file-boxes" style="display:inline-block; vertical-align:top; width:230px;">
-
-  <div class="file-box">
-    <strong>Send a file</strong>
-    <input type="file" id="put-file-select" />
-    <div id="put-file-list"></div>
-    <input type="button" value="Send to device" id="put-file-button" onclick="put_file(); return false;" />
+  <div style="display:inline-block; vertical-align:top;">
+    <form>
+      <input type="text" name="webrepl_url" id="url" value="" />
+      <input type="submit" id="button" value="Connect" onclick="button_click(); return false;" />
+    </form>
+    <div id="term">
+    </div>
   </div>
 
-  <div class="file-box">
-    <strong>Get a file</strong>
-    <input type="text" name="get_filename" id="get_filename" value="" size="13" />
-    <input type="button" value="Get from device" onclick="get_file(); return false;" />
+  <div id="file-boxes" style="display:inline-block; vertical-align:top; width:230px;">
+
+    <div class="file-box">
+      <strong>Send a file</strong>
+      <input type="file" id="put-file-select" />
+      <div id="put-file-list"></div>
+      <input type="button" value="Send to device" id="put-file-button" onclick="put_file(); return false;" />
+    </div>
+
+    <div class="file-box">
+      <strong>Get a file</strong>
+      <input type="text" name="get_filename" id="get_filename" value="" size="13" />
+      <input type="button" value="Get from device" onclick="get_file(); return false;" />
+    </div>
+
+    <div class="file-box" id="file-status"><span style="color:#707070">(file operation status)</span></div>
+
   </div>
 
-  <div class="file-box" id="file-status"><span style="color:#707070">(file operation status)</span></div>
 
-</div>
+  <br clear="both" />
+  <i>Terminal widget should be focused (text cursor visible) to accept input. Click on it if not.</i><br />
+  <i>To paste, press Ctrl+A, then Ctrl+V</i>
+  <br>
+  <br>
+  <!--This Section is For code-editing, currently basic and only to read and modify from with in webrepl interface-->
 
-<br clear="both" />
-<i>Terminal widget should be focused (text cursor visible) to accept input. Click on it if not.</i><br/>
-<i>To paste, press Ctrl+A, then Ctrl+V</i>
-</body>
+  </head>
 
-<script src="webrepl.js"></script>
+  <br>
+  <br>
+  <strong>Code Editor</strong>
+
+  <body>
+
+    <div class="text-editor-container">
+      <div class="file-box" style="vertical-align:baseline; width:230px;">
+        <input type="file" id="fileInput" onchange="readFile(this.files[0])" />
+        <button onclick="saveFile()">Save</button>
+      </div>
+    </div>
+    <div>
+      <textarea id="input" class="text-editor" oninput="updateOutput()"></textarea>
+    </div>
+
+
+
+  </body>
+
+
+  <script src="editor.js"></script>
+  <link rel="stylesheet" href="editor.css" />
+
+
+  <script src="webrepl.js"></script>
 
 </html>
